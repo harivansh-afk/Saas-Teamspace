@@ -1,9 +1,14 @@
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <main className="max-w-6xl w-full flex items-center justify-center px-6">
-      {children}
-    </main>
-  )
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Task management and team collaboration dashboard",
 }
 
-export default DashboardLayout
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return children
+}

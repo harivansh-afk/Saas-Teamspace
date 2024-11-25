@@ -15,13 +15,15 @@ import { Input } from '@/components/ui/input'
 import { CardWrapper } from '@/components/auth/card-wrapper'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { useEffect, useRef, useTransition } from 'react'
 import { login } from '@/actions/login'
 import toast from 'react-hot-toast'
 
 export default function Page() {
+  const router = useRouter();
   const searchParams = useSearchParams()
+  const callbackUrl = searchParams.get('callbackUrl')
   const urlError =
     searchParams.get('error') === 'OAuthAccountNotLinked'
       ? 'Email already in use with different provider!'
@@ -52,8 +54,12 @@ export default function Page() {
         }
         if (data?.success) {
           toast.success(data.success)
-          form.reset({ email: '', password: '' })
-          window.location.href = '/'
+          if (data.success === 'Confirmation email sent!') {
+            // Don't redirect if we're just sending a confirmation email
+            return;
+          }
+          router.push('/dashboard');
+          router.refresh();
         }
       })
     })

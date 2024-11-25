@@ -1,26 +1,26 @@
+'use client'
+
 import Link from 'next/link'
 import { ModeToggle } from '@/components/mode-toggle'
 import Image from 'next/image'
 import { UserButton } from '@/components/user-button'
 import { MobileSidebar } from '@/components/mobile-sidebar'
 import { Logo } from '@/components/logo'
+import { usePathname } from 'next/navigation'
 
 export const navPages = [
   {
     title: 'Dashboard',
     link: '/dashboard'
-  },
-  {
-    title: 'Pricing',
-    link: '/#pricing'
-  },
-  {
-    title: 'Items',
-    link: '/#items'
   }
 ]
 
 export const Navbar = () => {
+  const pathname = usePathname()
+
+  // Don't show navbar on home page
+  if (pathname === '/') return null
+
   return (
     <nav className="top-0 w-full z-50 transition">
       <div className="max-w-6xl mx-auto px-6 py-4">
